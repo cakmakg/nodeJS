@@ -16,6 +16,7 @@ module.exports={
     //CRUD
   
     create: async (req, res) => {
+      const result=  await BlogCategory.create(req.body)
 
         res.status().send({
             error: false

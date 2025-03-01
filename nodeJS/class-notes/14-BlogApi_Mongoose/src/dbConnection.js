@@ -6,7 +6,7 @@ const { default: mongoose } = require('mongoose');
 
 const Mongoose= require('mongoose')
 const dbConnection=()=>{
-    mongoose.connect('mongodb://127.0.0.1:27017/blogAPI')
+    mongoose.connect(process.env?.MONGO_URI)
     .then(()=>console.log('db connected'))
     .catch((err)=>console.log('db not connected', err))
 }
