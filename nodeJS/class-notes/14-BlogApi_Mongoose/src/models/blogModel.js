@@ -5,7 +5,7 @@ const mongoose= require('mongoose')
 // BlogCategorySchema
 
 // create schema
-const BlogCategorySchema= new mongoose.Schema({
+const blogCategorySchema= new mongoose.Schema({
 
     name:{
         type:String,
@@ -19,17 +19,17 @@ const BlogCategorySchema= new mongoose.Schema({
 
 // set model
 
-const BlogCategory= mongoose.model('BlogCategory',BlogCategorySchema)
+const BlogCategory= mongoose.model('BlogCategory',blogCategorySchema)
 
 // BlogPostSchema
 
-const BlogPostSchema= new mongoose.Schema({
+const blogPostSchema= new mongoose.Schema({
     //_id
 
     categoryId: { // default relation; ManyToOne
         type: mongoose.Schema.Types.ObjectId,
         ref: 'BlogCategory',
-        required: true, 
+        required: true
         // unique:true // convert to OneToOne Relation.
     },
 
@@ -48,7 +48,7 @@ const BlogPostSchema= new mongoose.Schema({
     timestamps:true
 })
 // set model
-const BlogPost= mongoose.model('BlogPost',BlogPostSchema)
+const BlogPost= mongoose.model('BlogPost',blogPostSchema)
 
 module.exports={
     BlogCategory, BlogPost
