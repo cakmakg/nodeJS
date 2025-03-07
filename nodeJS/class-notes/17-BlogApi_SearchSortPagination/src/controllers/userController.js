@@ -1,15 +1,24 @@
-"use strict"
+"use strict";
+const { BlogPost } = require('../models/blogModel');
+/* -------------------------------------------------------
+    EXPRESSJS - BLOG Project with Mongoose
+------------------------------------------------------- */
+// Call Model;
 
-// call models: 
-const User= require('../models/userModel')
+const User = require('../models/userModel');
+
+/* ------------------------------------------------------- */
+
 module.exports = {
 
     list: async (req, res) => {
 
-        const result = await User.find();
+        // const result = await User.find();
+       const result= await res.getModelList(User)
 
         res.status(200).send({
             error: false,
+            details: await res.getModelList(User),
             result
         })
     },

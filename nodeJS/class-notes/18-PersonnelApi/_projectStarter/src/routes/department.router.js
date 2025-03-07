@@ -1,23 +1,11 @@
-"use strict";
+"use strict"
 /* -------------------------------------------------------
-    EXPRESSJS - BLOG Project with Mongoose
+    EXPRESS - Personnel API
 ------------------------------------------------------- */
-
 const router = require('express').Router()
-
-const user = require('../controllers/userController');
-
 /* ------------------------------------------------------- */
-// URL: /user ->
 
-router.route('/')
-    .get(user.list)
-    .post(user.create);
 
-router.route('/:userId')
-    .get(user.read)
-    .put(user.update)
-    .delete(user.delete);
 
 /* ------------------------------------------------------- */
 module.exports = router

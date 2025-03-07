@@ -20,15 +20,34 @@ require('express-async-errors')
 // dbConnection()
 require('./src/dbConnection')()
 
+//* SessionCookies
+// https://expressjs.com/en/resources/middleware/cookie-session.html
+// https://www.npmjs.com/package/cookie-session
+// npm i cookie-session
+const session = require('cookie-session');
+
+app.use(session({
+    secret:process.env.SECRET_KEY,
+    maxAge: 1000*60*60*24*2
+}))
+
+//* Authentication Middleware
+app.use(require('./src/middlewares/userControl'));
+
 // main route
 app.all('/', (req, res) => {
-    res.send('WELCOME TO BLOG API')
+    res.send({
+        error: false,
+        message:'WELCOME TO BLOG API',
+        session: req.session
+    })
 })
 
 // continue from here...
-// Blog route
+// Blog & User & Auth routes
 app.use('/blog', require('./src/routes/blogRouter'));
 app.use('/user', require('./src/routes/userRouter'));
+app.use('/auth', require('./src/routes/authRouter'));
 
 // error handler
 app.use(require('./src/middlewares/errorHandler'))

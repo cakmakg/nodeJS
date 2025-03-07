@@ -33,4 +33,3 @@ router.route('/todo/:id')
     .delete(todo.delete)
 
 module.exports = router;
-module.exports= router
