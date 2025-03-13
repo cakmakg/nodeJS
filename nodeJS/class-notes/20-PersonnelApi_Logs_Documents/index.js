@@ -7,8 +7,8 @@
     $ npm i cookie-session
 */
 
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 require("dotenv").config();
 const PORT = process.env?.PORT || 8000;
@@ -18,7 +18,7 @@ require('express-async-errors');
 
 // DB Connection:
 const { dbConnection } = require('./src/configs/dbConnection');
-dbConnection()
+dbConnection();
 
 /* ------------------------------------------------------- */
 //* Middlewares:
@@ -42,42 +42,65 @@ app.use(require('cookie-session')({
 // Authentication Middleware
 app.use(require('./src/middlewares/authentication'));
 
-//logger
-app.use(require('./src/middlewares/logger'))
+// Logger
+app.use(require('./src/middlewares/logger'));
 
-//DOCUMENTATION
-//$ npm i swagger-autogen JSON creator
-// JSON
+/* ------------------------------------------------------- *
+// Logger
+// $ npm i morgan
+// $ https://expressjs.com/en/resources/middleware/morgan.html
+
+const morgan = require('morgan');
+
+// app.use(morgan('tiny'));
+// app.use(morgan('short'));
+// app.use(morgan('dev'));
+// app.use(morgan('common'));
+// app.use(morgan('combined'));
+
+// Custom log:
+const customLog = 'TIME=":date[iso]" - URL=":url" - Method=":method" - IP=":remote-addr" - Ref=":referrer" - Status=":status" - Sign=":user-agent" (:response-time[digits] ms)'
+// app.use(morgan(customLog));
+
+// Write to file;
+// const fs = require('node:fs');
+// app.use(morgan(customLog, {
+//     stream: fs.createWriteStream('./examplelogs.log', { flags: 'a+' })
+// }));
+
+
+// Write to file - Day by Day;
+const fs = require('node:fs');
+const now = new Date();
+// console.log(now);
+const today = now.toISOString().split('T')[0]
+// console.log(today)
+app.use(morgan(customLog, {
+    stream: fs.createWriteStream(`./logs/${today}.log`, { flags: 'a+' })
+}));
+/* ------------------------------------------------------- */
+
+// DOCUMENTATION:
+// $ npm i swagger-autogen # JSON Creator
+// $ npm i swagger-ui-express
+// $ npm i redoc-express
+
+// Json
 app.use('/documents/json', (req, res) => {
     res.sendFile('swagger.json', { root: '.' })
 });
-/* ------------------------------------------------------- *
+
+// Swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerJson = require('./swagger.json');
+app.use('/documents/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, { swaggerOptions: { persistAuthorization: true } }));
+
+// Redoc
+const redoc = require('redoc-express');
+app.use('/documents/redoc', redoc({ specUrl: '/documents/json', title: 'Redoc UI' }));
 
 
-const morgan= require('morgan')
-//app.use(morgan('tiny'))
-//app.use(morgan('short'))
-//app.use(morgan('dev'))
-//app.use(morgan('common'))
-//app.use(morgan('combined'))
 
-//* cumtom log
-//app.use(morgan());
-
-const customLog= 'TIME=":date[iso]" - URL=":url" - Method=":method" - IP=":remote-addr" - Ref=":referrer" - Status=":status" - Sign=":user-agent" (:response-time[digits] ms)'
-// write to file
-// const fs= require('node:fs')
-// app.use(morgan(customLog, {
-//     stream: fs.createWriteStream('./examplelogs.log',{flags: 'a+'})
-// }))
-
-// write to file day by day
-const fs= require('node:fs')
-const now= new Date()
-const today= now.toISOString().split('T')[0]
-app.use(morgan(customLog, {
- stream: fs.createWriteStream(`./logs/${today}.log`, {flags: 'a+'})
-  }))
 /* ------------------------------------------------------- */
 //* Routes:
 
@@ -87,11 +110,14 @@ app.all('/', (req, res) => {
         error: false,
         message: "Welcome to Personnel API Service",
         // session: req.session
-        user: req.user
+        user: req.user,
+        documents: {
+            swagger:'http://127.0.0.1:8000/documents/swagger',
+            redoc:'http://127.0.0.1:8000/documents/redoc',
+            json:'http://127.0.0.1:8000/documents/json',
+        }
     })
 });
-
-
 
 // Auth
 app.use("/auth", require('./src/routes/auth.router'));

@@ -9,6 +9,11 @@ module.exports = {
 
     list: async (req, res) => {
 
+        /*
+            _swagger.deprecated = true
+            #swagger.ignore = true
+        */
+
         const result = await res.getModelList(Token)
 
         res.status(200).send({
@@ -20,6 +25,11 @@ module.exports = {
 
     create: async (req, res) => {
 
+        /*
+            _swagger.deprecated = true
+            #swagger.ignore = true
+        */
+
         const result = await Token.create(req.body)
 
         res.status(201).send({
@@ -30,6 +40,11 @@ module.exports = {
 
     read: async (req, res) => {
 
+        /*
+            _swagger.deprecated = true
+            #swagger.ignore = true
+        */
+
         const result = await Token.findOne({ _id: req.params.id });
 
         res.status(200).send({
@@ -39,6 +54,11 @@ module.exports = {
     },
 
     update: async (req, res) => {
+
+        /*
+            _swagger.deprecated = true
+            #swagger.ignore = true
+        */
 
         const result = await Token.updateOne({ _id: req.params.id }, req.body, {
             runValidators: true, // run validation method 
@@ -52,6 +72,11 @@ module.exports = {
     },
 
     delete: async (req, res) => {
+
+        /*
+            _swagger.deprecated = true
+            #swagger.ignore = true
+        */
 
         const result = await Token.deleteOne({ _id: req.params.id });
 

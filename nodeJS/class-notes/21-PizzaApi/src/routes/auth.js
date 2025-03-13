@@ -1,14 +1,13 @@
 "use strict"
 /* -------------------------------------------------------
-    EXPRESS - Personnel API
+    | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
-const router = require('express').Router()
-const auth = require('../controllers/auth.controller');
+const router = require('express').Router();
+const auth = require('../controllers/auth');
 /* ------------------------------------------------------- */
 // URL: /auth
 
 router.post('/login', auth.login);
-// router.all('/logout', auth.logout) // swaggerAutogen "all() ve use()"" methodlarını yakalamaz.
 router.get('/logout', auth.logout);
 
 /* ------------------------------------------------------- */
