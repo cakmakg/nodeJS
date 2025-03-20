@@ -17,7 +17,7 @@ const app = express(); // Run application on express.
 //? Env
 require('dotenv').config();
 const PORT = process.env.PORT;
-/* ------------------------------------------------------- *
+/* ------------------------------------------------------- */
 
 //? HTTP_METHODS & URLS;
 // app.get('/', (req, res) => res.end("called in 'get' method."));
@@ -30,11 +30,11 @@ const PORT = process.env.PORT;
 // app.all('/', (req, res) => res.end("called in 'all' method."));
 
 //* app.route('url')
-app.route('/')
-    .get((req, res) => res.send({ method: 'GET' }))
-    .post((req, res) => res.send({ method: 'POST' }))
-    .put((req, res) => res.send({ method: 'PUT' }))
-    .delete((req, res) => res.send({ method: 'DELETE' }));
+// app.route('/')
+//     .get((req, res) => res.send({ method: 'GET' }))
+//     .post((req, res) => res.send({ method: 'POST' }))
+//     .put((req, res) => res.send({ method: 'PUT' }))
+//     .delete((req, res) => res.send({ method: 'DELETE' }));
 
 /* ------------------------------------------------------- *
 //? URL (Path) Options:
