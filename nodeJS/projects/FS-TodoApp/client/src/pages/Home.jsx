@@ -6,7 +6,7 @@ const Home = () => {
   const [tutorials, setTutorials] = useState([]);
 
  // const url = "https://tutorial-api.fullstack.clarusway.com/tutorials/";
-  const url = "http://127.0.0.1:8000/todo";
+  const url = "http://127.0.0.1:8000/todo/";
 
   //!GET (READ)
   const getBilgiler = async () => {

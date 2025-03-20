@@ -30,7 +30,7 @@ const cors = require('cors');
 //     "preflightContinue": false,
 //     "optionsSuccessStatus": 204
 // }
-app.use(cors())
+app.use(cors());
 
 /* ------------------------------------------------------- */
 // Routes
